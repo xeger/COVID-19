@@ -212,14 +212,15 @@ def time_series_confirmed_by_adm2(for_adm0='US', for_date=Date.today)
   end
 end
 
-(Date.new(2020,3,22)..Date.new(2020,4,3)).each do |date|
-  time_series_confirmed_by_adm2('US', date)
-end
-
-# adm0, date = ARGV
-# date = Date.parse(date) rescue nil
-
-# case ARGV.first
-# when 'US' then time_series_confirmed_by_adm2(adm0, date)
-# else time_series_confirmed_by_adm0()
+# INITIAL CATCH UP
+# (Date.new(2020,3,22)..Date.new(2020,4,3)).each do |date|
+#   time_series_confirmed_by_adm2('US', date)
 # end
+
+adm0, date = ARGV
+date = Date.parse(date) rescue nil
+
+case ARGV.first
+when 'US' then time_series_confirmed_by_adm2(adm0, date)
+else time_series_confirmed_by_adm0()
+end
