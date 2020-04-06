@@ -5,7 +5,8 @@ require 'pry'
 require 'set'
 require 'time'
 
-INPUT_FILES = '/Users/tony/Code/CSSEGISandData/COVID-19/csse_covid_19_data/csse_covid_19_daily_reports/*.csv'
+c = '/Users/tony/Code/CSSEGISandData/COVID-19'
+INPUT_FILES = '#{INPUT_REPO}/csse_covid_19_data/csse_covid_19_daily_reports/*.csv'
 
 INTERESTING_ADM0S = ['Iceland', 'Italy', 'UK', 'US', 'Brazil', 'Germany', 'France']
 
@@ -211,6 +212,14 @@ def time_series_confirmed_by_adm2(for_adm0='US', for_date=Date.today)
     end
   end
 end
+
+def freshen_input_data
+  Dir.chdir(INPUT_REPO) do
+    system('git pull origin master') || raise 'Failed to update input data'
+  end
+end
+
+freshen_input_data
 
 # INITIAL CATCH UP
 # (Date.new(2020,3,22)..Date.new(2020,4,3)).each do |date|
