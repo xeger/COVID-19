@@ -5,8 +5,8 @@ require 'pry'
 require 'set'
 require 'time'
 
-c = '/Users/tony/Code/CSSEGISandData/COVID-19'
-INPUT_FILES = '#{INPUT_REPO}/csse_covid_19_data/csse_covid_19_daily_reports/*.csv'
+INPUT_REPO = '/Users/tony/Code/CSSEGISandData/COVID-19'
+INPUT_FILES = "#{INPUT_REPO}/csse_covid_19_data/csse_covid_19_daily_reports/*.csv"
 
 INTERESTING_ADM0S = ['Iceland', 'Italy', 'UK', 'US', 'Brazil', 'Germany', 'France']
 
@@ -215,7 +215,7 @@ end
 
 def freshen_input_data
   Dir.chdir(INPUT_REPO) do
-    system('git pull origin master') || raise 'Failed to update input data'
+    system('git pull -q origin master') || raise('Failed to update input data')
   end
 end
 
