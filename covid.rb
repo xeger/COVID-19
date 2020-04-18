@@ -215,6 +215,9 @@ end
 
 def freshen_input_data
   Dir.chdir(INPUT_REPO) do
+    num, dur = `git log -1 --format='%cr'`.split(' ')
+    return if (dur == 'hours')
+    STDERR.puts "Pulling from CSSE (newest commit is #{num} #{dur} ago)"
     system('git pull -q origin master') || raise('Failed to update input data')
   end
 end
