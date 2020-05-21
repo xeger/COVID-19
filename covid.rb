@@ -2,6 +2,7 @@
 
 require 'csv'
 require 'pry'
+require 'sequel'
 require 'set'
 require 'time'
 
@@ -205,11 +206,15 @@ def time_series_confirmed_by_adm2(for_adm0='US', for_date=Date.today)
     end
   end
 
+  db = Sequel.postgres("covid_#{for_adm0.downcase}")
+
   by_date_locale.each_pair do |date, by_locale|
     by_locale.each_pair do |locale, confirmed|
       adm2, adm1 = locale.split(',')
-      puts [date, %Q{"#{adm2}"}, %Q{"#{adm1}"}, confirmed].join(',')
+      # puts [date, %Q{"#{adm2}"}, %Q{"#{adm1}"}, confirmed].join(',')
+      db[:daily_cases].insert(date: date, name: adm2, state: adm1, confirmed: confirmed)
     end
+    puts "Imported #{by_locale.size} records for #{date}"
   end
 end
 
